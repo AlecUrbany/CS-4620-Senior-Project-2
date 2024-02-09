@@ -1,0 +1,12 @@
+Note Friday 02/09/2024
+Desired Modification
+- Re-design map
+- Change the point of view of camera (change to first person) so that can look around?!
+- X-ray vision (later) 
+- Modify the AI (the purpose of AI: the AI agents (aka the enemies) follow a path. If enemies see the player, chase the player.
+If the enemies/AI agents do not see the players for 15 seconds, they will return to their path. 
+Set enemies "way point" / Automate the enemies walking around. 
+- Re-code "Cone" sidelines of the enemies (aka how far and how wide enemies can see) (make the light radiant)
+(want to check if there is more efficient way to it-- code cleaning) 
+- Sound lures (attract the enemies to you)/ Grab objects and throw them away to distract the enemies and shoot from behind
+- Figure out inventory system (maybe use an array list)
