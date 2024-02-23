@@ -8,6 +8,7 @@ public class PlayerHealth : MonoBehaviour, IHealth
     [SerializeField] private Animator animator;
     [SerializeField] private Renderer player;
     [SerializeField] private GameObject GameOverScreen;
+    [SerializeField] private GameObject PlayerDyingModel;
     private GameObject splatEffect;
     public VideoFader fader;
     public Transform playerHead;
@@ -70,10 +71,17 @@ public class PlayerHealth : MonoBehaviour, IHealth
 
     public void onDeath()
     {
-        StartCoroutine(DeathTimer(playerModel));
-        float timer = 2f;
-        fader.FadeToBlack(timer);
-        Debug.Log("GAME OVER");
+        //Spawns in player ragdoll
+        Instantiate(PlayerDyingModel, playerHead, false);
+        //Vanishes actual player model
+        Color invisible;
+        invisible = player.material.color;
+        invisible.a = 0f;
+        player.material.color = invisible;
+        //StartCoroutine(DeathTimer(playerModel));
+        //float timer = 2f;
+        //fader.FadeToBlack(timer);
+       //Debug.Log("GAME OVER");
         
 
     }
@@ -82,7 +90,7 @@ public class PlayerHealth : MonoBehaviour, IHealth
     {//tests our damage function. Must remove later
 		if (Input.GetKeyDown(KeyCode.G))
 		{
-			TakeDamage(100);
+			TakeDamage(50);
 		}
         if (Input.GetKeyDown(KeyCode.H))
 		{
