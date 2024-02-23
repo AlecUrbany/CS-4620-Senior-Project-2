@@ -6,19 +6,17 @@ public class PlayerHealth : MonoBehaviour, IHealth
     [SerializeField] private GameObject bloodSplat;
     [SerializeField] private GameObject playerModel;
     [SerializeField] private Animator animator;
-    [SerializeField] private Renderer player;
-    [SerializeField] private GameObject GameOverScreen;
-    private GameObject splatEffect;
-    public VideoFader fader;
+    private GameObject splatter;
     public Transform playerHead;
     public bool isDead;
     
     public float maxHealth = 100f;
     public float currentHealth;
     public bool isInvulnerable;
-    
-    public HealthBar healthBar;
-    
+    public Renderer player;
+    //public HealthBar healthBar;
+    //public VideoFader fader;
+    [SerializeField] private GameObject GameOverScreen;
 
     public float MaxHealth{
         get { return MaxHealth; }
@@ -30,7 +28,7 @@ public class PlayerHealth : MonoBehaviour, IHealth
     void Start(){
         currentHealth = maxHealth;
         healthBar = GameObject.FindWithTag("Healthbar").GetComponent<HealthBar>();
-        player = GameObject.FindWithTag("Player").GetComponent<Renderer>();
+        player = GameObject.FindWithTag("GameOverVideoPlayer").GetComponent<Renderer>();
         fader = GameObject.FindWithTag("fader").GetComponent<VideoFader>();
         player = GetComponentInChildren<SkinnedMeshRenderer>();
         player.enabled = true;
@@ -47,8 +45,8 @@ public class PlayerHealth : MonoBehaviour, IHealth
         {
             StartCoroutine("GetInvulnerable");
             currentHealth -= damageAmount;
-            splatEffect = Instantiate(bloodSplat, playerHead, false);
-            StartCoroutine(BloodTimer(splatEffect));
+            splatter = Instantiate(bloodSplat, playerHead, false);
+            StartCoroutine(BloodTimer(splatter));
             healthBar.SetHealth(currentHealth);
 
             if(currentHealth <= 0){
@@ -80,14 +78,14 @@ public class PlayerHealth : MonoBehaviour, IHealth
 
     void Update()
     {//tests our damage function. Must remove later
-		if (Input.GetKeyDown(KeyCode.G))
-		{
-			TakeDamage(100);
-		}
-        if (Input.GetKeyDown(KeyCode.H))
-		{
-			HealHealth(20);
-		}
+		//if (Input.GetKeyDown(KeyCode.G))
+		//{
+		//	TakeDamage(100);
+		//}
+        //if (Input.GetKeyDown(KeyCode.H))
+		//{
+		//	HealHealth(20);
+		//}
     }
     IEnumerator GetInvulnerable()
     {
@@ -124,10 +122,10 @@ public class PlayerHealth : MonoBehaviour, IHealth
         GameOverScreen.SetActive(true);
         Destroy(player);
     }
-    IEnumerator BloodTimer(GameObject splatEffect)
+    IEnumerator BloodTimer(GameObject splatter)
     {
         yield return new WaitForSeconds(.5f);
-        Destroy(splatEffect);
+        Destroy(splatter);
     }
 
     

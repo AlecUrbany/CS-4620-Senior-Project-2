@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-/*
 public enum EnemyAIType{
     leftRight,
     UpDown,
@@ -253,7 +252,7 @@ public class EnemyAI : MonoBehaviour
         }
     }
 }
-*/
+
 
 
 

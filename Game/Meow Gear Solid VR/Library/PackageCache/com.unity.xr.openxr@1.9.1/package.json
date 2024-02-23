@@ -44,5 +44,6 @@
     "url": "https://github.cds.internal.unity3d.com/unity/xr.sdk.openxr.git",
     "type": "git",
     "revision": "630b0982955a4b4bbc0ee8440739c579544bbd80"
-  }
+  },
+  "_fingerprint": "d9acc3cff38128d24dd320a0fdcf2654a7a6d47c"
 }
