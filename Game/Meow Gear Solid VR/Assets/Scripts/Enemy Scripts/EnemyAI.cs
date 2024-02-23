@@ -29,7 +29,7 @@ public class EnemyAI : MonoBehaviour
     private bool patrol = true;
     private bool chasing = false;
     public Quaternion startRotation;
-    private AlertPhase alertPhaseScript; 
+    //private AlertPhase alertPhaseScript; 
 
 //These six lines are for the exclamation point upon noticing the player
     public Transform enemyMouth;

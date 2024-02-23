@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class visionCone : MonoBehaviour
 {
-	public AlertPhase alertPhase;
+	//public AlertPhase alertPhase;
 	public float viewRadius;
 	[Range(0,360)]
 	public float viewAngle;

@@ -1,7 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Video;
 
 public class PlayerHealth : MonoBehaviour, IHealth
 {
@@ -16,8 +14,8 @@ public class PlayerHealth : MonoBehaviour, IHealth
     public float currentHealth;
     public bool isInvulnerable;
     public Renderer player;
-    public HealthBar healthBar;
-    public VideoFader fader;
+    //public HealthBar healthBar;
+    //public VideoFader fader;
     [SerializeField] private GameObject GameOverScreen;
 
     public float MaxHealth{
