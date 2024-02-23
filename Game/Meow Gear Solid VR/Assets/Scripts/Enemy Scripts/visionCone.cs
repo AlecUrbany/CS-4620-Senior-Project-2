@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/*
 public class visionCone : MonoBehaviour
 {
 	//public AlertPhase alertPhase;
@@ -214,3 +214,4 @@ public class visionCone : MonoBehaviour
 	}
 
 }
+*/
