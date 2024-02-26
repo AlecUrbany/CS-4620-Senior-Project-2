@@ -532,6 +532,7 @@ GameObject:
   - component: {fileID: 536802135}
   - component: {fileID: 536802134}
   - component: {fileID: 536802138}
+  - component: {fileID: 536802139}
   m_Layer: 6
   m_Name: Dummy Player
   m_TagString: Player
@@ -627,6 +628,7 @@ Transform:
   m_Children:
   - {fileID: 1232586562}
   - {fileID: 1263851615}
+  - {fileID: 1612597307}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &536802138
@@ -654,6 +656,18 @@ MonoBehaviour:
   currentHealth: 100
   isInvulnerable: 0
   healthBar: {fileID: 169922397}
+--- !u!114 &536802139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 536802133}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e206fecbf32b6ca4fb9ab2986ea3dd0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &637351259
 GameObject:
   m_ObjectHideFlags: 0
@@ -948,7 +962,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 503
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -1477,7 +1491,7 @@ GameObject:
   - component: {fileID: 1612597305}
   - component: {fileID: 1612597304}
   m_Layer: 31
-  m_Name: Sphere
+  m_Name: Player_Minimap_Marker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1564,12 +1578,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1612597303}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.05, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.88, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 536802137}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
@@ -1580,4 +1594,3 @@ SceneRoots:
   - {fileID: 495729202}
   - {fileID: 536802137}
   - {fileID: 1334395448}
-  - {fileID: 1612597307}
