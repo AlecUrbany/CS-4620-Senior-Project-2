@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class FieldOfView : MonoBehaviour
 {
-
+    //These lines denote settings for the viewcone.
     public float viewRadius;
     [Range(0, 360)]
     public float viewAngle;
@@ -21,11 +21,22 @@ public class FieldOfView : MonoBehaviour
 
     public MeshFilter viewMeshFilter;
     Mesh viewMesh;
-
     public bool canSeeTarget;
+
+    //These lines denote the settings for the effects when a player is seen
+    [SerializeField] private Transform enemyHead;
+    [SerializeField] private GameObject exclamationPoint;
+    [SerializeField] private AudioSource source;
+    [SerializeField] private AudioClip alertSound;
+    public float nameLifeSpan = .5f;
+    public bool hasBeenAlerted = false;
+
+
+
 
     void Start()
     {
+        hasBeenAlerted = false;
         viewMesh = new Mesh();
         viewMesh.name = "View Mesh";
         viewMeshFilter.mesh = viewMesh;
@@ -67,6 +78,17 @@ public class FieldOfView : MonoBehaviour
             }
             if (visibleTargets.Contains(target))
             {
+                if(EventBus.Instance.inAlertPhase == false)
+                {
+                    hasBeenAlerted = true;
+                    ShowAlertSound();
+                }
+                else if(hasBeenAlerted == false && EventBus.Instance.inAlertPhase == true)
+                {
+                    hasBeenAlerted = true;
+                    ShowAlertSound();
+                }
+
                 canSeeTarget = true;
                 EventBus.Instance.PlayerIsSeen();
             }
@@ -75,6 +97,10 @@ public class FieldOfView : MonoBehaviour
             {
                 canSeeTarget = false;
                 EventBus.Instance.PlayerIsHidden();
+                if(EventBus.Instance.inAlertPhase == false)
+                {
+                    hasBeenAlerted = false;
+                }
             }
         }
     }
@@ -219,4 +245,10 @@ public class FieldOfView : MonoBehaviour
         }
     }
 
+    void ShowAlertSound()
+    {
+            GameObject prefab = Instantiate(exclamationPoint, enemyHead, false);
+            source.PlayOneShot(alertSound);
+            Destroy(prefab, nameLifeSpan);
+    }
 }
