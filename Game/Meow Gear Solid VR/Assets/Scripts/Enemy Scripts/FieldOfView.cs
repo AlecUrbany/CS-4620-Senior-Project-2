@@ -22,6 +22,8 @@ public class FieldOfView : MonoBehaviour
     public MeshFilter viewMeshFilter;
     Mesh viewMesh;
 
+    public bool canSeeTarget;
+
     void Start()
     {
         viewMesh = new Mesh();
@@ -62,6 +64,17 @@ public class FieldOfView : MonoBehaviour
                 {
                     visibleTargets.Add(target);
                 }
+            }
+            if (visibleTargets.Contains(target))
+            {
+                canSeeTarget = true;
+                EventBus.Instance.PlayerIsSeen();
+            }
+
+            else
+            {
+                canSeeTarget = false;
+                EventBus.Instance.PlayerIsHidden();
             }
         }
     }

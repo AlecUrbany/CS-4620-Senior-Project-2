@@ -13,6 +13,8 @@ public class EventBus
     public bool canMove = true;
     public bool enemyCanMove = true;
     public bool hasMacguffin = false;
+    public bool playerisSeen = false;
+    public bool inAlertPhase = false;
     public float timeElapsed = 0;
     public int numTimesAlertPhaseEntered = 0;
     public int numKilledEnemies = 0;
@@ -28,8 +30,10 @@ public class EventBus
     public event Action<ItemData> onPickUpItem;
 
     public event Action onPickUpMacguffin;
-
+    public event Action onPlayerIsSeen;
+    public event Action onPlayerIsHidden;
     public event Action onEnterAlertPhase;
+    public event Action onExitAlertPhase;
 
     public event Action onEnemyKilled;
 
@@ -76,11 +80,25 @@ public class EventBus
         hasMacguffin = true;
     }
 
+    public void PlayerIsSeen()
+    {
+        playerisSeen = true;
+        EnterAlertPhase();
+    }
+    public void PlayerIsHidden()
+    {
+        playerisSeen = false;
+    }
     public void EnterAlertPhase()
     {
+        inAlertPhase = true;
         numTimesAlertPhaseEntered++;
     }
 
+    public void ExitAlertPhase()
+    {
+        inAlertPhase = false;
+    }
     public void EnemyKilled()
     {
         numKilledEnemies++;
