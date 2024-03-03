@@ -14,7 +14,8 @@ public class FieldOfView : MonoBehaviour
 
     [HideInInspector]
     public List<Transform> visibleTargets = new List<Transform>();
-
+    public Transform playerLocation;
+    public Vector3 playerSeenPosition;
     public float meshResolution;
     public int edgeResolveIterations;
     public float edgeDstThreshold;
@@ -40,6 +41,7 @@ public class FieldOfView : MonoBehaviour
         viewMesh = new Mesh();
         viewMesh.name = "View Mesh";
         viewMeshFilter.mesh = viewMesh;
+        playerLocation = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
 
         StartCoroutine("FindTargetsWithDelay", .2f);
     }
@@ -62,6 +64,12 @@ public class FieldOfView : MonoBehaviour
     void FindVisibleTargets()
     {
         visibleTargets.Clear();
+        canSeeTarget = false;
+        EventBus.Instance.PlayerIsHidden();
+        if(EventBus.Instance.inAlertPhase == false)
+        {
+            hasBeenAlerted = false;
+        }
         Collider[] targetsInViewRadius = Physics.OverlapSphere(transform.position, viewRadius, targetMask);
 
         for (int i = 0; i < targetsInViewRadius.Length; i++)
@@ -74,35 +82,22 @@ public class FieldOfView : MonoBehaviour
                 if (!Physics.Raycast(transform.position, dirToTarget, dstToTarget, obstacleMask))
                 {
                     visibleTargets.Add(target);
-                }
+                    canSeeTarget = true;
+                    playerSeenPosition = playerLocation.position;
+                    EventBus.Instance.PlayerIsSeen(playerSeenPosition);
+                    if(EventBus.Instance.inAlertPhase == false)
+                    {
+                        hasBeenAlerted = true;
+                        ShowAlertSound();
+                    }
+                    if(hasBeenAlerted == false && EventBus.Instance.inAlertPhase == true)
+                    {
+                        hasBeenAlerted = true;
+                        ShowAlertSound();
+                    }
+                }            
             }
-            if (visibleTargets.Contains(target))
-            {
-                canSeeTarget = true;
-                EventBus.Instance.PlayerIsSeen();
-                if(EventBus.Instance.inAlertPhase == false)
-                {
-                    hasBeenAlerted = true;
-                    ShowAlertSound();
-                }
-                if(hasBeenAlerted == false && EventBus.Instance.inAlertPhase == true)
-                {
-                    hasBeenAlerted = true;
-                    ShowAlertSound();
-                }
-
-
-            }
-
-            else
-            {
-                canSeeTarget = false;
-                EventBus.Instance.PlayerIsHidden();
-                if(EventBus.Instance.inAlertPhase == false)
-                {
-                    hasBeenAlerted = false;
-                }
-            }
+            
         }
     }
 

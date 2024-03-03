@@ -15,6 +15,7 @@ public class EventBus
     public bool hasMacguffin = false;
     public bool playerisSeen = false;
     public bool inAlertPhase = false;
+    public Vector3 playerLastKnownPosition;
     public float timeElapsed = 0;
     public int numTimesAlertPhaseEntered = 0;
     public int numKilledEnemies = 0;
@@ -80,23 +81,28 @@ public class EventBus
         hasMacguffin = true;
     }
 
-    public void PlayerIsSeen()
+    public void PlayerIsSeen(Vector3 playerCurrentPosition)
     {
+        playerLastKnownPosition = playerCurrentPosition;
+        onPlayerIsSeen?.Invoke();
         playerisSeen = true;
         EnterAlertPhase();
     }
     public void PlayerIsHidden()
     {
+        onPlayerIsHidden?.Invoke();
         playerisSeen = false;
     }
     public void EnterAlertPhase()
     {
+        onEnterAlertPhase?.Invoke();
         inAlertPhase = true;
         numTimesAlertPhaseEntered++;
     }
 
     public void ExitAlertPhase()
     {
+        onExitAlertPhase?.Invoke();
         inAlertPhase = false;
     }
     public void EnemyKilled()

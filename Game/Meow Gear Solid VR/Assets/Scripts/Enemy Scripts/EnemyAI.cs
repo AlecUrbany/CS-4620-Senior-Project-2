@@ -14,7 +14,7 @@ public class EnemyAI : MonoBehaviour
     public FieldOfView fieldOfView;
     public Rigidbody rigidBody;
     public float moveSpeed;
-    public float mininumDistanceFromPlayer = .1f;
+    public float mininumDistanceFromPlayer = 4f;
     public Vector3 startPosition;
     public int rotationSpeed;
     public NavMeshAgent agent;
@@ -24,7 +24,6 @@ public class EnemyAI : MonoBehaviour
     private bool movingStage2;
     private bool chasing;
     public Quaternion startRotation;
-    private AlertPhase alertPhaseScript;
     public bool hasBeenAlerted;
     void Awake()
     {
@@ -45,7 +44,6 @@ public class EnemyAI : MonoBehaviour
     {
         animator.SetBool("IsMoving", true);
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
-        alertPhaseScript = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<AlertPhase>();
     }
     void Update()
     {
@@ -53,18 +51,20 @@ public class EnemyAI : MonoBehaviour
         Vector3 distanceFromPlayer = player.position - transform.position;
         canSeePlayer = fieldOfView.canSeeTarget;
         hasBeenAlerted = EventBus.Instance.inAlertPhase;
-        //if(EventBus.Instance.enemyCanMove == false)
-        //{
-            //return;
-        //}
+        
+        if(EventBus.Instance.enemyCanMove == false)
+        {
+            return;
+        }
 
         //If the player has been spotted, chase them
         if(hasBeenAlerted == true)
         {
+            playerLastKnownPosition = EventBus.Instance.playerLastKnownPosition;
             animator.SetBool("IsAttacking", true);
             if(canSeePlayer == true)
             {
-                playerLastKnownPosition = alertPhaseScript.lastKnownPosition;
+                
                 FollowPlayer(playerCurrentPosition, playerLastKnownPosition, canSeePlayer);
             }
             else
@@ -98,6 +98,7 @@ public class EnemyAI : MonoBehaviour
             Vector3 distanceFromPlayer = playerPosition - transform.position;
             float distance = Vector3.Distance(playerPosition,transform.position);
             distanceFromPlayer.Normalize();
+            Debug.Log("Here's the Distance: " + distance);
             if(distance <= mininumDistanceFromPlayer)
             {
                 rigidBody.velocity = distanceFromPlayer * 0;
@@ -122,6 +123,7 @@ public class EnemyAI : MonoBehaviour
             Vector3 distanceFromPlayer = playerLastKnownPosition - transform.position;
             float distance = Vector3.Distance(playerLastKnownPosition,transform.position);
             distanceFromPlayer.Normalize();
+            Debug.Log("Here's the Distance: " + distance);
             if(distance <= mininumDistanceFromPlayer)
             {
                 rigidBody.velocity = distanceFromPlayer * 0;
