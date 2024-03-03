@@ -78,19 +78,20 @@ public class FieldOfView : MonoBehaviour
             }
             if (visibleTargets.Contains(target))
             {
+                canSeeTarget = true;
+                EventBus.Instance.PlayerIsSeen();
                 if(EventBus.Instance.inAlertPhase == false)
                 {
                     hasBeenAlerted = true;
                     ShowAlertSound();
                 }
-                else if(hasBeenAlerted == false && EventBus.Instance.inAlertPhase == true)
+                if(hasBeenAlerted == false && EventBus.Instance.inAlertPhase == true)
                 {
                     hasBeenAlerted = true;
                     ShowAlertSound();
                 }
 
-                canSeeTarget = true;
-                EventBus.Instance.PlayerIsSeen();
+
             }
 
             else

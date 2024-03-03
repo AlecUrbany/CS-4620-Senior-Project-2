@@ -14,7 +14,8 @@ public class AlertPhase : MonoBehaviour
     public double alertDuration = 15;
     private Transform player;
     public bool inAlertPhase;
-    private Vector3 lastKnownPosition; 
+    public Vector3 lastKnownPosition; 
+    public bool playerIsSeen;
 
     //These lines are for playing music
     [SerializeField] private AudioSource musicSource;
@@ -27,7 +28,9 @@ public class AlertPhase : MonoBehaviour
     
     void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         musicSource = GetComponent<AudioSource>();
+        alertMusicPlaying = false;
         timeRemaining = alertDuration;
         AlertInfo.SetActive(false);
         miniMap.SetActive(true);
@@ -36,6 +39,7 @@ public class AlertPhase : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        playerIsSeen = EventBus.Instance.playerisSeen;
         inAlertPhase = EventBus.Instance.inAlertPhase;
         if (inAlertPhase == true) 
         {
@@ -53,7 +57,7 @@ public class AlertPhase : MonoBehaviour
             }
             if (EventBus.Instance.playerisSeen == true)
             {
-                EventBus.Instance.playerLastSeenLocation = player.position;
+                lastKnownPosition = player.position;
                 timeRemaining = alertDuration;
                 TimerText.text = string.Format("{0:00}", timeRemaining);
                 AlertInfo.SetActive(true);
@@ -100,6 +104,7 @@ public class AlertPhase : MonoBehaviour
         audioSource.Stop();
         audioSource.volume = startVolume;
         StopCoroutine ("PlayAlertTheme");
+        alertMusicPlaying = false;
     }
  
 }

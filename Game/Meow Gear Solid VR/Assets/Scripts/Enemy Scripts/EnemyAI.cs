@@ -14,9 +14,11 @@ public class EnemyAI : MonoBehaviour
     public FieldOfView fieldOfView;
     public Rigidbody rigidBody;
     public float moveSpeed;
+    public float mininumDistanceFromPlayer = .1f;
     public Vector3 startPosition;
     public int rotationSpeed;
     public NavMeshAgent agent;
+    public Animator animator;
     private float currentPatrolDistance;
     private bool movingStage1;
     private bool movingStage2;
@@ -41,12 +43,13 @@ public class EnemyAI : MonoBehaviour
     }
     void Start()
     {
+        animator.SetBool("IsMoving", true);
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+        alertPhaseScript = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<AlertPhase>();
     }
     void Update()
     {
         playerCurrentPosition = player.position;
-        playerLastKnownPosition = EventBus.Instance.playerLastSeenLocation;
         Vector3 distanceFromPlayer = player.position - transform.position;
         canSeePlayer = fieldOfView.canSeeTarget;
         hasBeenAlerted = EventBus.Instance.inAlertPhase;
@@ -55,20 +58,25 @@ public class EnemyAI : MonoBehaviour
             //return;
         //}
 
+        //If the player has been spotted, chase them
         if(hasBeenAlerted == true)
         {
+            animator.SetBool("IsAttacking", true);
             if(canSeePlayer == true)
             {
-                FollowPlayer(playerCurrentPosition);
+                playerLastKnownPosition = alertPhaseScript.lastKnownPosition;
+                FollowPlayer(playerCurrentPosition, playerLastKnownPosition, canSeePlayer);
             }
             else
             {
-                FollowPlayer(playerLastKnownPosition);
+                FollowPlayer(playerCurrentPosition, playerLastKnownPosition, canSeePlayer);;
             }
 
         }
+        //Otherwise, return to their position
         else
         {
+            animator.SetBool("IsAttacking", false);
             if(!agent.pathPending)
             {
                 rigidBody.velocity = Vector3.zero;
@@ -82,16 +90,58 @@ public class EnemyAI : MonoBehaviour
             }
         }
     }
-    void FollowPlayer(Vector3 playerPosition)
-    {
-        Vector3 distanceFromPlayer = playerPosition - transform.position;
-        distanceFromPlayer.Normalize();
-        rigidBody.velocity = distanceFromPlayer * moveSpeed;
 
-        if (rigidBody.velocity != Vector3.zero)
+    void FollowPlayer(Vector3 playerPosition, Vector3 lastKnownPosition, bool canSeePlayer)
+    {
+        if(canSeePlayer == true)
         {
-            Quaternion desiredRotation = Quaternion.LookRotation(rigidBody.velocity);
-            transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, Time.deltaTime * rotationSpeed);
+            Vector3 distanceFromPlayer = playerPosition - transform.position;
+            float distance = Vector3.Distance(playerPosition,transform.position);
+            distanceFromPlayer.Normalize();
+            if(distance <= mininumDistanceFromPlayer)
+            {
+                rigidBody.velocity = distanceFromPlayer * 0;
+                animator.SetBool("IsMoving", false);
+                animator.SetBool("IsAttacking", true);
+                transform.LookAt(player.transform);
+            }
+            if(distance > mininumDistanceFromPlayer)
+            {
+                rigidBody.velocity = distanceFromPlayer * moveSpeed;
+                animator.SetBool("IsMoving", true);
+                animator.SetBool("IsAttacking", false);
+                if (rigidBody.velocity != Vector3.zero)
+                {
+                    Quaternion desiredRotation = Quaternion.LookRotation(rigidBody.velocity);
+                    transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, Time.deltaTime * rotationSpeed);
+                }
+            }            
         }
+        else
+        {
+            Vector3 distanceFromPlayer = playerLastKnownPosition - transform.position;
+            float distance = Vector3.Distance(playerLastKnownPosition,transform.position);
+            distanceFromPlayer.Normalize();
+            if(distance <= mininumDistanceFromPlayer)
+            {
+                rigidBody.velocity = distanceFromPlayer * 0;
+                animator.SetBool("IsMoving", false);
+                animator.SetBool("IsAttacking", true);
+                transform.LookAt(playerLastKnownPosition);
+            }
+            if(distance > mininumDistanceFromPlayer)
+            {
+                rigidBody.velocity = distanceFromPlayer * moveSpeed;
+                animator.SetBool("IsMoving", true);
+                animator.SetBool("IsAttacking", false);
+                if (rigidBody.velocity != Vector3.zero)
+                {
+                    Quaternion desiredRotation = Quaternion.LookRotation(rigidBody.velocity);
+                    transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, Time.deltaTime * rotationSpeed);
+                }
+            }             
+        }
+
     }
+    
 }

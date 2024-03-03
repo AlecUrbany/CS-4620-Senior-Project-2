@@ -14,7 +14,6 @@ public class EventBus
     public bool enemyCanMove = true;
     public bool hasMacguffin = false;
     public bool playerisSeen = false;
-    public Vector3 playerLastSeenLocation;
     public bool inAlertPhase = false;
     public float timeElapsed = 0;
     public int numTimesAlertPhaseEntered = 0;
