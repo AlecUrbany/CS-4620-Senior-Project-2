@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class ScreenFader : MonoBehaviour
 {
-    [SerializeField] private Image fader;
+    [SerializeField] private Image faderOverlay;
 
     private bool busy;
 
@@ -29,25 +29,25 @@ public class ScreenFader : MonoBehaviour
     private IEnumerator FadeToBlackCount(float duration)
     {
         busy = true;
-        while(fader.color.a < 1)
+        while(faderOverlay.color.a < 1)
         {
-            fader.color = new Color(0,0,0, fader.color.a + (Time.deltaTime/duration));
+            faderOverlay.color = new Color(0,0,0, faderOverlay.color.a + (Time.deltaTime/duration));
             yield return null;
         }
         
-        fader.color = new Color(0,0,0,1);
+        faderOverlay.color = new Color(0,0,0,1);
         busy = false;
         yield return null;
     }
     private IEnumerator FadeFromBlackCount(float duration)
     {
         busy = true;
-        while(fader.color.a > 0)
+        while(faderOverlay.color.a > 0)
         {
-            fader.color = new Color(0,0,0, fader.color.a - (Time.deltaTime/duration));
+            faderOverlay.color = new Color(0,0,0, faderOverlay.color.a - (Time.deltaTime/duration));
             yield return null;
         }
-        fader.color = new Color(0,0,0,0);
+        faderOverlay.color = new Color(0,0,0,0);
         busy = false;
         yield return null;
     }
