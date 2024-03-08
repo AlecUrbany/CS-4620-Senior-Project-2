@@ -63,30 +63,43 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Enemy Scripts\Path.cs" />
     <Compile Include="Assets\Scripts\Item Scripts\ItemData.cs" />
+    <Compile Include="Assets\PauseMenu.cs" />
+    <Compile Include="Assets\Scripts\World Scripts\EndScreen.cs" />
     <Compile Include="Assets\Scripts\Player Scripts\TempMovement.cs" />
+    <Compile Include="Assets\Scripts\Player Scripts\FollowPlayer.cs" />
     <Compile Include="Assets\Scripts\Player Scripts\IHealth.cs" />
     <Compile Include="Assets\Scripts\Codec Scripts\NewCodec.cs" />
     <Compile Include="Assets\Scripts\World Scripts\ScreenFader.cs" />
+    <Compile Include="Assets\Scripts\Codec Scripts\Dialogue.cs" />
     <Compile Include="Assets\Scripts\Enemy Scripts\EnemyAI.cs" />
     <Compile Include="Assets\Scripts\Enemy Scripts\EnemyBulletCollision.cs" />
     <Compile Include="Assets\Scripts\Item Scripts\ItemSpin.cs" />
     <Compile Include="Assets\MoveObject1.cs" />
+    <Compile Include="Assets\OptionsMenu.cs" />
     <Compile Include="Assets\LookAtMe.cs" />
     <Compile Include="Assets\Scripts\World Scripts\EventBus.cs" />
     <Compile Include="Assets\Scripts\World Scripts\VideoFader.cs" />
     <Compile Include="Assets\Scripts\Enemy Scripts\visionCone.cs" />
     <Compile Include="Assets\Scripts\Enemy Scripts\EnemyGunFunctions.cs" />
     <Compile Include="Assets\Scripts\Item Scripts\Item.cs" />
+    <Compile Include="Assets\Scripts\World Scripts\Key_Door.cs" />
     <Compile Include="Assets\EnemyEngine.cs" />
     <Compile Include="Assets\Scripts\Item Scripts\Billboard.cs" />
     <Compile Include="Assets\Scripts\Player Scripts\PlayerHealth.cs" />
+    <Compile Include="Assets\Scripts\Codec Scripts\NewCodecTrigger.cs" />
+    <Compile Include="Assets\Scripts\Menu Scripts\MainMenu.cs" />
+    <Compile Include="Assets\Scripts\Player Scripts\PlayerController.cs" />
     <Compile Include="Assets\AlertPhase.cs" />
+    <Compile Include="Assets\Scripts\Codec Scripts\NewDialogueManager.cs" />
     <Compile Include="Assets\Scripts\Item Scripts\Weapon.cs" />
     <Compile Include="Assets\Scripts\Enemy Scripts\EnemyHealth.cs" />
+    <Compile Include="Assets\Scripts\Menu Scripts\Credits.cs" />
     <Compile Include="Assets\Scripts\Codec Scripts\DialogueTrigger.cs" />
     <Compile Include="Assets\Scripts\Player Scripts\HealthBar.cs" />
+    <Compile Include="Assets\Scripts\World Scripts\Auto_Door.cs" />
     <Compile Include="Assets\Scripts\Codec Scripts\DialogueManager.cs" />
     <Compile Include="Assets\Scripts\Enemy Scripts\FieldOfView.cs" />
+    <Compile Include="Assets\Scripts\Codec Scripts\NewDialogueTrigger.cs" />
     <Compile Include="Assets\Scripts\Codec Scripts\CodecTrigger.cs" />
   </ItemGroup>
   <ItemGroup>
