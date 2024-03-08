@@ -1,15 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 public class EnemyEngine : MonoBehaviour
 {
     public Transform path;
-
-    private List<Transform> myNodes;
-
+    public  List<Transform> myNodes;
     public float maxSteerAngle = 45f;
 
     public WheelCollider myWheelCollider;
@@ -18,16 +17,20 @@ public class EnemyEngine : MonoBehaviour
     public float turnSpeed;
     public Rigidbody rigidBody;
 
+    public Transform myCurrentNode;
+    public int index;
+
 
     //keep track of current nodes
     private int currentNode = 0;
+
     // Start is called before the first frame update
     void Start()
     {
         rigidBody = GetComponent<Rigidbody>();
-        Transform[] pathTransforms = path.GetComponentsInChildren<Transform>();
         myNodes = new List<Transform>();
-
+        Transform[] pathTransforms = path.GetComponentsInChildren<Transform>();
+     
         foreach (Transform t in pathTransforms)
         {
             if (t != path.transform)
@@ -35,25 +38,36 @@ public class EnemyEngine : MonoBehaviour
                 myNodes.Add(t);
             }
         }
+        index = 0;
+        myCurrentNode = myNodes.ElementAt(index);
     }
 
     // Update is called once per frame
-    private void FixedUpdate()
+    
+    private void Update()
     {
-        Transform nodePosition = myNodes.ElementAt(0);
-        //ApplySteer();
-        Drive(nodePosition.position);
+        Vector3 distance = transform.position - myCurrentNode.position;
+        distance.y = 0;
+
+        if((distance).magnitude > 0.01f)
+        {
+            Drive(myCurrentNode.position);
+        }
+        else
+        {
+            //update current node
+            ++index;
+            if(index == myNodes.Count)
+            {
+                index = 0;
+                myCurrentNode = myNodes.ElementAt(index);
+            }
+            else
+            {
+                myCurrentNode = myNodes.ElementAt(index);
+            }
+        }
     }
-
-    /*private void ApplySteer(Vector3 nodePosition)
-    {
-        Vector3 relativeVector = transform.InverseTransformPoint(myNodes[currentNode].position);
-        print(relativeVector);
-        //relativeVector = relativeVector / relativeVector.magnitude;
-        float newSteer = (relativeVector.x / relativeVector.magnitude) * maxSteerAngle;
-        myWheelCollider.steerAngle = newSteer;
-    }*/
-
     private void Drive(Vector3 nodePosition)
     {
         Vector3 distanceFromPlayer = nodePosition - transform.position;

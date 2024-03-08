@@ -761,7 +761,7 @@ MonoBehaviour:
   m_text: LIFE
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9e754ae80f5b76646b3e6cce1c29a4af, type: 2}
-  m_sharedMaterial: {fileID: -2107371292491307270, guid: 9e754ae80f5b76646b3e6cce1c29a4af, type: 2}
+  m_sharedMaterial: {fileID: 5296626878890206558, guid: 9e754ae80f5b76646b3e6cce1c29a4af, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -955,7 +955,7 @@ Transform:
   m_GameObject: {fileID: 941346112}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5, y: 0, z: 0}
+  m_LocalPosition: {x: 5, y: 1.17, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1071,11 +1071,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   path: {fileID: 1270649271}
+  myNodes: []
   maxSteerAngle: 45
   myWheelCollider: {fileID: 0}
   moveSpeed: 10
   turnSpeed: 5
   rigidBody: {fileID: 1039373663}
+  myCurrentNode: {fileID: 0}
+  index: 0
 --- !u!54 &1039373663 stripped
 Rigidbody:
   m_CorrespondingSourceObject: {fileID: 988067545877544074, guid: af1fbc60f43d04c49b91b7bdfa7ebc3d, type: 3}
@@ -1218,7 +1221,7 @@ Transform:
   m_GameObject: {fileID: 1165325948}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1.17, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
