@@ -4,13 +4,20 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class Player_Controller : Controller{
-    //public InputAction InputSystem;
-    public Rigidbody RigidBody;
-    Vector2 Direction = Vector2.zero;
-    float MovementSpeed = 50.0f;
+    public InputAction InputSystem;
+    public CharacterController CharacterControllerReference;
+    public Entity_Player PlayerReference;
+    public GameObject Cat;
+
+    Player_Input PlayerInput;
 
     private void Awake(){
-        Player_Input PlayerInput = new Player_Input();
+        //RigidBody = GetComponent<Rigidbody>();
+        CharacterControllerReference = GetComponent<CharacterController>();
+        PlayerReference = GetComponent<Entity_Player>();
+
+        PlayerInput = new Player_Input();
+
         PlayerInput.Player.Enable();
         PlayerInput.Player.Jump.performed += Jump;
         PlayerInput.Player.Move.performed += Move;
@@ -32,18 +39,17 @@ public class Player_Controller : Controller{
     }
 
     private void FixedUpdate(){
-        //RigidBody.velocity = new Vector2(Direction.x * MovementSpeed, Direction.y * MovementSpeed);
+        PlayerInput.Player.Move.ReadValue<Vector2>();
     }
 
     public void Jump(InputAction.CallbackContext Context){
         if (Context.performed){
-            Debug.Log("Pressed");
-            RigidBody.AddForce(Vector3.up * 5.0f, ForceMode.Impulse);
+            //RigidBody.AddForce(Vector3.up * 5.0f, ForceMode.Impulse);
         }
     }
 
     public void Move(InputAction.CallbackContext Context){
         Vector2 Input = Context.ReadValue<Vector2>();
-        RigidBody.AddForce(new Vector3(Input.y * -1.0f, 0.0f, Input.x) * MovementSpeed, ForceMode.Force);
+        CharacterControllerReference.Move((Quaternion.Euler(0, PlayerReference.Transform.eulerAngles.y, 0) * (new Vector3(Input.y * -1.0f, 0.0f, Input.x) * PlayerReference.EntityStatistics.MovementSpeed) * Time.deltaTime));
     }
 }

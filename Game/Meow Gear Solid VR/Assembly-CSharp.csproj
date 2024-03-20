@@ -63,6 +63,12 @@
   <ItemGroup>
     <Compile Include="Assets\Input\Player_Input.cs" />
     <Compile Include="Assets\Scripts\Player_Controller.cs" />
+    <Compile Include="Assets\Scripts\Entity_Player.cs" />
+    <Compile Include="Assets\Scripts\Item_Parent.cs" />
+    <Compile Include="Assets\Scripts\Item_Categories.cs" />
+    <Compile Include="Assets\Scripts\Entity_Statistics.cs" />
+    <Compile Include="Assets\Scripts\Inventory.cs" />
+    <Compile Include="Assets\Scripts\Interact_Interface.cs" />
     <Compile Include="Assets\Scripts\Controller.cs" />
   </ItemGroup>
   <ItemGroup>
